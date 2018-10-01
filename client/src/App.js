@@ -72,9 +72,11 @@ class App extends Component
               secondReceiverBalance       : secondReceiverBalance,
               contractAddress             : instanceAddress      ,
               contractBalance             : instanceBalance
-          },
+          }
 
-          this.runExample
+//          , async () => {}
+
+//          ,  this.runExample
       );
     }
     catch (error)
