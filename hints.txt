@@ -1,0 +1,5 @@
+1. Metamask browser extension was injecting some unwanted networks.
+So it should be disabled during the development process (or it must be connected with a local geth instance)
+
+
+
