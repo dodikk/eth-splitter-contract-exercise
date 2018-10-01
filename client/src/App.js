@@ -5,11 +5,20 @@ import truffleContract from "truffle-contract";
 
 import "./App.css";
 
-class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+class App extends Component
+{
+  state =
+  {
+      storageValue:    0,
+      web3        : null,
+      accounts    : null,
+      contract    : null
+  };
 
-  componentDidMount = async () => {
-    try {
+  componentDidMount = async () =>
+  {
+    try
+    {
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
 
@@ -24,16 +33,21 @@ class App extends Component {
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
       this.setState({ web3, accounts, contract: instance }, this.runExample);
-    } catch (error) {
+    }
+    catch (error)
+    {
       // Catch any errors for any of the above operations.
       alert(
         `Failed to load web3, accounts, or contract. Check console for details.`
       );
       console.log(error);
-    }
-  };
+    } // catch
 
-  runExample = async () => {
+  }; // componentDidMount
+
+
+  runExample = async () =>
+  {
     const { accounts, contract } = this.state;
 
     // Stores a given value, 5 by default.
@@ -44,12 +58,21 @@ class App extends Component {
 
     // Update state with the result.
     this.setState({ storageValue: response.toNumber() });
-  };
 
-  render() {
-    if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
-    }
+  }; // runExample
+
+
+
+  render()
+  {
+
+    if (!this.state.web3)
+    {
+        return <div>Loading Web3, accounts, and contract...</div>;
+
+    } // if - no web3
+
+
     return (
       <div className="App">
         <h1>Good to Go!</h1>
@@ -65,7 +88,9 @@ class App extends Component {
         <div>The stored value is: {this.state.storageValue}</div>
       </div>
     );
-  }
-}
+  } // render
+
+
+} // class App
 
 export default App;
