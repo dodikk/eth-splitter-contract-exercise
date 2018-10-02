@@ -50,13 +50,16 @@ class App extends Component
       const instance = await Contract.deployed();
       const instanceAddress = await instance.GetContractAddress();
 
-//      var onFinishedEvent = instance.LogEndSplit();
-//      onFinishedEvent.watch(this.onContractStateChangedWatch);
-//      this._blockchainLogsSubscription = onFinishedEvent;
+      console.log(instance);
+      console.log("contract : " + instanceAddress);
 
 
-      var onFinishedEvent = instance.LogEndSplit({}, this.onContractStateChangedWatch);
-      this._blockchainLogsSubscription = onFinishedEvent;
+
+      console.log("[BEGIN] subscribing...");
+      instance.LogEndSplit(  
+                    {fromBlock: 0, toBlock: 'latest'} ,  
+                    this.onContractStateChangedWatch  ); 
+       console.log("[END] subscribed")
 
 
 
@@ -137,7 +140,7 @@ class App extends Component
 
   }; // runExample
 
-  onContactStateChangedWatch = (maybeError, maybeResult) =>
+  onContactStateChangedWatch = async (maybeError, maybeResult) =>
   {
       console.log("===onContractStateChangedWatch");
 
@@ -185,7 +188,7 @@ class App extends Component
 
   }
 
-  onContractStateChangeError = (error) =>
+  onContractStateChangeError = async (error) =>
   {
        console.log("=== blockchain log error");
        console.log(error);
