@@ -4,3 +4,13 @@ So it should be disabled during the development process (or it must be connected
 
 2. Private network `truffle deploy` might not work without an explicit gas limit
 https://ethereum.stackexchange.com/questions/21262/truffle-deployment-on-test-network-says-error-exceeds-block-gas-limit
+
+
+3. During contract deployment plain account unlocking might be insufficient.
+Time in seconds should be submitted to keep the accounts open long enough.
+
+```
+personal.unlockAccount(eth.accounts[0], "<your password>", 15000)
+```
+
+https://ethereum.stackexchange.com/questions/11908/account-is-locked-after-running-truffle-migrate-command
