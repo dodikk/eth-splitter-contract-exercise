@@ -29,8 +29,9 @@ class App extends Component
       contractBalance             : null
   };
 
-  _blockchainLogsSubscription = null;
-
+  _blockchainLogsSubscription     = null;
+  _pendingTransactionSubscription = null;
+  _ethFilterSubscription          = null;
 
   componentDidMount = async () =>
   {
@@ -55,12 +56,38 @@ class App extends Component
 
 
 
-      console.log("[BEGIN] subscribing...");
-      instance.LogEndSplit(  
-                    {fromBlock: 0, toBlock: 'latest'} ,  
-                    this.onContractStateChangedWatch  ); 
-       console.log("[END] subscribed")
+      console.log("[BEGIN] subscribing event...");
+      instance.LogEndSplit(                                
+                    {fromBlock: 'latest'}               ,  
+//                    {fromBlock: 0, toBlock: 'latest'} ,  
+                    this.onContractStateChangedWatch    ); 
+      console.log("[END] subscribed event");
 
+
+      console.log("[BEGIN] subscribing txpool...");
+      this._pendingTransactionSubscription =         
+          web3.eth.subscribe('pendingTransactions'); 
+
+      this._pendingTransactionSubscription.subscribe( (error, result) => {}  )  
+                                          .on("data" , this.onTransactionMined) 
+                                          .on("error", console.log);            
+
+      console.log("[BEGIN] subscribing txpool...");
+
+// https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethfilter
+//      console.log("[BEGIN] subscribing filter...");
+//      this._ethFilterSubscription = web3.eth.subscribe("latestBlock");
+//      this._ethFilterSubscription.watch(this.onBlockMined);
+//      console.log("[END] subscribing filter...");
+      
+
+/*
+I subscribed to the event but it was not working. The callback was never called. Then I found out that I needed to activate the WebSockets server (--ws and similar in geth).
+Found it in this Ethereum Stack Exchange Post
+
+
+https://github.com/ethereum/web3.js/issues/989
+*/
 
 
 /*
@@ -129,8 +156,8 @@ class App extends Component
          this.state.secondReceiverAccountAddress,
          {
              from: this.state.senderAccountAddress,
-             value: 2000,
-             gasPrice: 0
+             value: 1000000,
+             gasPrice: 10000 
          });
 
      console.log(submittedTransaction);
@@ -139,6 +166,24 @@ class App extends Component
     // the changes will be updated by the log events listener
 
   }; // runExample
+
+//================= EVENTS ================== //
+//========================================== //
+
+
+  onBlockMined = async (maybeError, maybeBlockData) =>
+  {
+      console.log("=== onBlockMined");
+      this.onContactStateChangedImpl();
+  }
+
+  onTransactionMined = async (txHash) =>
+  {
+      console.log("=== onTransaction");
+
+      this.onContactStateChangedImpl();
+  }
+
 
   onContactStateChangedWatch = async (maybeError, maybeResult) =>
   {
