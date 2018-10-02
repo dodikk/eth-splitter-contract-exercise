@@ -16,25 +16,28 @@ class App extends Component
 
   state =
   {
-      web3        : null,
-      accounts    : null,
-      contract    : null,
+      web3                        : null,
+      accounts                    : null,
+      contract                    : null,
       senderAccountAddress        : null,
       firstReceiverAccountAddress : null,
       secondReceiverAccountAddress: null,
       firstReceiverBalance        : null,
       secondReceiverBalance       : null,
       senderBalance               : null,
-      contractAddress : null,
-      contractBalance : null
+      contractAddress             : null,
+      contractBalance             : null
   };
 
+  _blockchainLogsSubscription = null;
 
 
   componentDidMount = async () =>
   {
     try
     {
+      console.log("=== componentDidMount");
+
       // Get network provider and web3 instance.
       const web3 = await getWeb3();
 
@@ -46,6 +49,29 @@ class App extends Component
       Contract.setProvider(web3.currentProvider);
       const instance = await Contract.deployed();
       const instanceAddress = await instance.GetContractAddress();
+
+//      var onFinishedEvent = instance.LogEndSplit();
+//      onFinishedEvent.watch(this.onContractStateChangedWatch);
+//      this._blockchainLogsSubscription = onFinishedEvent;
+
+
+      var onFinishedEvent = instance.LogEndSplit({}, this.onContractStateChangedWatch);
+      this._blockchainLogsSubscription = onFinishedEvent;
+
+
+
+/*
+      this._blockchainLogsSubscription =
+          web3.eth.subscribe(
+              'logs'                                 ,
+               { address: instanceAddress }          ,
+               this.onContractStateChangeSubscribed  );
+
+      this._blockchainLogsSubscription =
+          this._blockchainLogsSubscription
+              .on("data" , this.onContractStateChanged)
+              .on("error", this.onContractStateError  );
+*/
 
       var sender         = accounts[2];
       var firstReceiver  = accounts[0];
@@ -73,11 +99,8 @@ class App extends Component
               contractAddress             : instanceAddress      ,
               contractBalance             : instanceBalance
           }
+      ); // this.setState()
 
-//          , async () => {}
-
-//          ,  this.runExample
-      );
     }
     catch (error)
     {
@@ -91,29 +114,97 @@ class App extends Component
   }; // componentDidMount
 
 
-  runExample = async () =>
+  performSplit = async () =>
   {
 
+     console.log("=== [begin] perform split");
+    // TODO: fix hard code
 
-/*
-    const { accounts, contract } = this.state;
+     var submittedTransaction = 
+     await this.state.contract.Split(
+         this.state.firstReceiverAccountAddress,
+         this.state.secondReceiverAccountAddress,
+         {
+             from: this.state.senderAccountAddress,
+             value: 2000,
+             gasPrice: 0
+         });
 
-    // Stores a given value, 5 by default.
-    await contract.set(5, { from: accounts[0] });
+     console.log(submittedTransaction);
+     console.log("=== [end] perform split"); 
 
-    // Get the value from the contract to prove it worked.
-    const response = await contract.get();
-
-    // Update state with the result.
-    this.setState({ storageValue: response.toNumber() });
-*/
+    // the changes will be updated by the log events listener
 
   }; // runExample
 
+  onContactStateChangedWatch = (maybeError, maybeResult) =>
+  {
+      console.log("===onContractStateChangedWatch");
+
+      console.log(maybeResult);
+      console.log(maybeError);
+
+      if (maybeError)
+      {
+          alert(maybeError);
+      }
+      else
+      {
+          this.onContactStateChangedImpl();
+      }
+  }
+
+  onContractStateChanged = async (logRecord) =>
+  {
+      console.log("===onContractStateChanged");
+      console.log(logRecord);
+
+      this.onContactStateChangedImpl();
+  }
+
+  onContractStateChangedImpl = async () =>
+  {
+      var web3 = this.state.web3;
+
+      var senderBalance         = await web3.eth.getBalance(this.state.senderAccountAddress         );
+      var firstReceiverBalance  = await web3.eth.getBalance(this.state.firstReceiverAccountAddress  );
+      var secondReceiverBalance = await web3.eth.getBalance(this.state.secondReceiverAccountAddress );
+      var instanceBalance       = await web3.eth.getBalance(this.state.contractAddress              );
+
+      // Set web3, accounts, and contract to the state, and then proceed with an
+      // example of interacting with the contract's methods.
+      this.setState(
+          {
+              senderBalance               : senderBalance       ,
+              firstReceiverBalance        : firstReceiverBalance,
+              secondReceiverBalance       : secondReceiverBalance,
+              contractBalance             : instanceBalance
+          }
+      ); // this.setState()
+
+
+  }
+
+  onContractStateChangeError = (error) =>
+  {
+       console.log("=== blockchain log error");
+       console.log(error);
+
+       // TODO: better message or handling
+       alert(error);
+  }
+
+  onContractStateChangeSubscribed = async (maybeError, maybeResult) =>
+  {
+      console.log("=== subscribed");
+      console.log(maybeResult);
+  }
 
 
   render()
   {
+
+    console.log("=== render");
 
     if (!this.state.web3)
     {
@@ -170,6 +261,12 @@ class App extends Component
 
         </tbody>
         </table>
+
+
+        <p>
+
+             <button onClick={ () => this.performSplit() }  > Split ether  </button>
+        </p>
 
       </div>
     );
