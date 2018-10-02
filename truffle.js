@@ -30,7 +30,9 @@ networks: {
      {
       host: "localhost",
       port: 8545,
-      network_id: 2048
+      network_id: 2048,
+      gas: 4600000,
+      from: "0x395708e60ed5a060f899e5eb449d1eac9a2da44e"
     },
 
 } // networks
