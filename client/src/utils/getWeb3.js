@@ -26,7 +26,7 @@ const getWeb3 = () =>
         // use the development console's port by default.
         const provider =
             new Web3.providers.HttpProvider(
-                    "http://127.0.0.1:7545");
+                    "http://127.0.0.1:8545");
 
 
         web3 = new Web3(provider);
