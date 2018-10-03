@@ -27,7 +27,20 @@ const getWeb3 = () =>
       {
         // Fallback to localhost if no web3 injection. We've configured this to
         // use the development console's port by default.
+        //
 
+        var privateNetWebSocketUrl = 'ws://localhost:8555'  ;
+        var privateNetRpcUrl       = 'http://localhost:8545';
+
+        var ganacheWebSocketUrl    = 'ws://localhost:7545'  ;
+        var ganacheRpcUrl          = 'http://localhost:7545';
+
+
+        var isUseWebSockets = true;
+        var provider = null;
+
+        if (isUseWebSockets)
+        {
 // set a custom timeout at 30 seconds, 
 // and credentials 
 // (you can also add the credentials to the URL: ws://username:password@localhost:8546)
@@ -37,23 +50,28 @@ const getWeb3 = () =>
             timeout: 30000, 
 //            headers: {authorization: 'Basic username:password'} 
         }; 
+         
 
-        var ws = new Web3WsProvider('ws://localhost:8555', options);
-        const provider = ws;
+            var ws = 
+                new Web3WsProvider(
+                        ganacheWebSocketUrl, 
+                        options);
 
-//        const provider =
-//            new Web3.providers.WebsocketProvider(
-//                    "http://127.0.0.1:8555");
-
-
-//            new Web3.providers.HttpProvider(
-//                    "http://127.0.0.1:8545");
+            provider = ws;
+        }
+        else
+        {
+            provider =
+                new Web3.providers.HttpProvider(ganacheRpcUrl);
+        }
 
 
         web3 = new Web3(provider);
         console.log("No web3 instance injected, using Local web3.");
         resolve(web3);
-      }
+
+      } // else - web3 not injected yet
+
     }); // window.addEventListener
 
   }); // getWeb3 - promise
