@@ -55,6 +55,41 @@ class App extends Component
       console.log("contract : " + instanceAddress);
 
 
+      var sender         = accounts[2];
+      var firstReceiver  = accounts[0];
+      var secondReceiver = accounts[1];
+
+
+      var senderBalance         = await web3.eth.getBalance(sender         );
+      var firstReceiverBalance  = await web3.eth.getBalance(firstReceiver  );
+      var secondReceiverBalance = await web3.eth.getBalance(secondReceiver );
+      var instanceBalance       = await web3.eth.getBalance(instanceAddress);
+
+      // Set web3, accounts, and contract to the state, and then proceed with an
+      // example of interacting with the contract's methods.
+      this.setState(
+          {
+              web3                        : web3                ,
+              accounts                    : accounts            ,
+              contract                    : instance            ,
+              senderAccountAddress        : sender              ,
+              firstReceiverAccountAddress : firstReceiver       ,
+              secondReceiverAccountAddress: secondReceiver      ,
+              senderBalance               : senderBalance       ,
+              firstReceiverBalance        : firstReceiverBalance,
+              secondReceiverBalance       : secondReceiverBalance,
+              contractAddress             : instanceAddress      ,
+              contractBalance             : instanceBalance
+          }
+      ); // this.setState()
+
+
+// ========== subscriptions  ================= //
+// 
+// TODO: make a separate function
+//
+//============================
+
 
       console.log("[BEGIN] subscribing event...");
       instance.LogEndSplit(                                
@@ -69,9 +104,9 @@ class App extends Component
       this._pendingTransactionSubscription =         
           web3.eth.subscribe('pendingTransactions'); 
 
-      this._pendingTransactionSubscription.subscribe( (error, result) => {}  )  
-                                          .on("data" , this.onTransactionMined) 
-                                          .on("error", console.log);            
+      this._pendingTransactionSubscription.subscribe( this.onTransactionMinedMaybe );
+//                                          .on("data" , this.onTransactionMined) 
+//                                          .on("error", console.log);            
 
       console.log("[END] subscribing txpool...");
 
@@ -109,33 +144,7 @@ https://github.com/ethereum/web3.js/issues/989
               .on("error", this.onContractStateError  );
 */
 
-      var sender         = accounts[2];
-      var firstReceiver  = accounts[0];
-      var secondReceiver = accounts[1];
 
-
-      var senderBalance         = await web3.eth.getBalance(sender         );
-      var firstReceiverBalance  = await web3.eth.getBalance(firstReceiver  );
-      var secondReceiverBalance = await web3.eth.getBalance(secondReceiver );
-      var instanceBalance       = await web3.eth.getBalance(instanceAddress);
-
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      this.setState(
-          {
-              web3                        : web3                ,
-              accounts                    : accounts            ,
-              contract                    : instance            ,
-              senderAccountAddress        : sender              ,
-              firstReceiverAccountAddress : firstReceiver       ,
-              secondReceiverAccountAddress: secondReceiver      ,
-              senderBalance               : senderBalance       ,
-              firstReceiverBalance        : firstReceiverBalance,
-              secondReceiverBalance       : secondReceiverBalance,
-              contractAddress             : instanceAddress      ,
-              contractBalance             : instanceBalance
-          }
-      ); // this.setState()
 
     }
     catch (error)
@@ -182,6 +191,21 @@ https://github.com/ethereum/web3.js/issues/989
       console.log("=== onBlockMined");
       await this.onContractStateChangedImpl();
   }
+
+  onTransactionMinedMaybe = async (maybeError, maybeTxHash) =>
+  {
+      console.log("=== onTransaction - maybe");
+
+      if (maybeTxHash == null)
+      {
+           console.log(maybeError);
+      }
+      else
+      {
+          await this.onTransactionMined(maybeTxHash);
+      }
+  }
+
 
   onTransactionMined = async (txHash) =>
   {
