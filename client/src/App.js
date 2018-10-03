@@ -104,6 +104,12 @@ class App extends Component
 // this subscription works 
 // but it causes an error in the firefox console
 //
+// TypeError: can't assign to property "data" 
+// on "0x5b4ed3ad2c3382baba5d694651118ec13272b5644ab155711ce6140ab344400e": not an object 
+// index.js:359 
+//
+//
+// https://github.com/HaoLLL/web3-eth-contract/blob/master/src/index.js#L351
 //
       console.log("[BEGIN] subscribing txpool...");
 
