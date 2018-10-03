@@ -94,22 +94,26 @@ class App extends Component
       console.log("[BEGIN] subscribing event...");
       instance.LogEndSplit(                                
                     {fromBlock: 'latest'}               ,  
-//                    {fromBlock: 0, toBlock: 'latest'} ,  
                     this.onContractStateChangedWatch    ); 
       console.log("[END] subscribed event");
 
 
 
-      console.log("[BEGIN] subscribing txpool...");
-      this._pendingTransactionSubscription =         
-          web3.eth.subscribe('pendingTransactions'); 
 
+
+// this subscription works 
+// but it causes an error in the firefox console
+//
+//
+      console.log("[BEGIN] subscribing txpool...");
+
+      this._pendingTransactionSubscription =  
+          web3.eth.subscribe(
+              'pendingTransactions');
+//              this.onTransactionMinedMaybe); 
       this._pendingTransactionSubscription.subscribe( this.onTransactionMinedMaybe );
-//                                          .on("data" , this.onTransactionMined) 
-//                                          .on("error", console.log);            
 
       console.log("[END] subscribing txpool...");
-
 
 
 
@@ -132,16 +136,16 @@ https://github.com/ethereum/web3.js/issues/989
 
 
 /*
-      this._blockchainLogsSubscription =
-          web3.eth.subscribe(
-              'logs'                                 ,
-               { address: instanceAddress }          ,
-               this.onContractStateChangeSubscribed  );
-
-      this._blockchainLogsSubscription =
-          this._blockchainLogsSubscription
-              .on("data" , this.onContractStateChanged)
-              .on("error", this.onContractStateError  );
+//      this._blockchainLogsSubscription =
+//          web3.eth.subscribe(
+//              'logs'                                 ,
+//               { address: instanceAddress }          ,
+//               this.onContractStateChangeSubscribed  );
+//
+//      this._blockchainLogsSubscription =
+//          this._blockchainLogsSubscription
+//              .on("data" , this.onContractStateChanged)
+//              .on("error", this.onContractStateError  );
 */
 
 
@@ -176,6 +180,15 @@ https://github.com/ethereum/web3.js/issues/989
          });
 
      console.log(submittedTransaction);
+
+
+// this works as event listener too
+// commented to test the ```web3.eth.subscribe('pendingTransactions')```
+// 
+//
+//
+//     await this.onContractStateChangedImpl();
+
      console.log("=== [end] perform split"); 
 
     // the changes will be updated by the log events listener
@@ -241,6 +254,8 @@ https://github.com/ethereum/web3.js/issues/989
 
   onContractStateChangedImpl = async () =>
   {
+      console.log("===== onContractStateChangedImpl");
+
       var web3 = this.state.web3;
 
       var senderBalance         = await web3.eth.getBalance(this.state.senderAccountAddress         );
@@ -248,18 +263,35 @@ https://github.com/ethereum/web3.js/issues/989
       var secondReceiverBalance = await web3.eth.getBalance(this.state.secondReceiverAccountAddress );
       var instanceBalance       = await web3.eth.getBalance(this.state.contractAddress              );
 
+      console.log("[BEGIN] setState()");
+
+
+//      var previousStateDeepCopy = 
+//              JSON.parse( JSON.stringify(this.state) );
+//      var newState = previousStateDeepCopy;
+//
+//      newState.senderBalance         = senderBalance        ;
+//      newState.firstReceiverBalance  = firstReceiverBalance ;
+//      newState.secondReceiverBalance = secondReceiverBalance;
+//      newState.contractBalance       = instanceBalance      ;
+//
+//      this.setState(newState);
+      
+
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
+         
+
       this.setState(
-          {
+         {
               senderBalance               : senderBalance       ,
               firstReceiverBalance        : firstReceiverBalance,
               secondReceiverBalance       : secondReceiverBalance,
               contractBalance             : instanceBalance
           }
       ); // this.setState()
-
-
+      
+      console.log("[END] setState()");
   }
 
   onContractStateChangeError = async (error) =>
