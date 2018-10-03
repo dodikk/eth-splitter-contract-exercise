@@ -90,13 +90,13 @@ class App extends Component
 //
 //============================
 
-
+/*
       console.log("[BEGIN] subscribing event...");
       instance.LogEndSplit(                                
                     {fromBlock: 'latest'}               ,  
                     this.onContractStateChangedWatch    ); 
       console.log("[END] subscribed event");
-
+*/
 
 
 
@@ -111,16 +111,18 @@ class App extends Component
 //
 // https://github.com/HaoLLL/web3-eth-contract/blob/master/src/index.js#L351
 //
+
+
+/*
       console.log("[BEGIN] subscribing txpool...");
 
       this._pendingTransactionSubscription =  
           web3.eth.subscribe(
               'pendingTransactions');
-//              this.onTransactionMinedMaybe); 
       this._pendingTransactionSubscription.subscribe( this.onTransactionMinedMaybe );
 
-      console.log("[END] subscribing txpool...");
-
+      console.log("[END] subscribed txpool");
+*/
 
 
 
@@ -141,20 +143,13 @@ https://github.com/ethereum/web3.js/issues/989
 */
 
 
-/*
-//      this._blockchainLogsSubscription =
-//          web3.eth.subscribe(
-//              'logs'                                 ,
-//               { address: instanceAddress }          ,
-//               this.onContractStateChangeSubscribed  );
-//
-//      this._blockchainLogsSubscription =
-//          this._blockchainLogsSubscription
-//              .on("data" , this.onContractStateChanged)
-//              .on("error", this.onContractStateError  );
-*/
-
-
+      console.log("[BEGIN] subscribing logs...");
+      this._blockchainLogsSubscription =
+          web3.eth.subscribe(
+              'logs'                                 ,
+               { address: instanceAddress }          ,
+               this.onContractStateChangeSubscribed  );
+      console.log("[END] subscribed logs.");
 
     }
     catch (error)
@@ -272,18 +267,6 @@ https://github.com/ethereum/web3.js/issues/989
       console.log("[BEGIN] setState()");
 
 
-//      var previousStateDeepCopy = 
-//              JSON.parse( JSON.stringify(this.state) );
-//      var newState = previousStateDeepCopy;
-//
-//      newState.senderBalance         = senderBalance        ;
-//      newState.firstReceiverBalance  = firstReceiverBalance ;
-//      newState.secondReceiverBalance = secondReceiverBalance;
-//      newState.contractBalance       = instanceBalance      ;
-//
-//      this.setState(newState);
-      
-
       // Set web3, accounts, and contract to the state, and then proceed with an
       // example of interacting with the contract's methods.
          
@@ -311,9 +294,12 @@ https://github.com/ethereum/web3.js/issues/989
 
   onContractStateChangeSubscribed = async (maybeError, maybeResult) =>
   {
-      console.log("=== subscribed");
+      console.log("=== contract state changed");
+
       console.log(maybeResult);
-  }
+
+      await this.onContractStateChangedImpl();
+ }
 
 
   render()
