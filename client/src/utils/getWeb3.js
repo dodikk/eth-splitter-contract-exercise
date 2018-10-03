@@ -1,5 +1,8 @@
 import Web3 from "web3";
 
+
+var Web3WsProvider = require('web3-providers-ws');
+
 const getWeb3 = () =>
   new Promise((resolve, reject) => 
   {
@@ -24,9 +27,27 @@ const getWeb3 = () =>
       {
         // Fallback to localhost if no web3 injection. We've configured this to
         // use the development console's port by default.
-        const provider =
-            new Web3.providers.HttpProvider(
-                    "http://127.0.0.1:8545");
+
+// set a custom timeout at 30 seconds, 
+// and credentials 
+// (you can also add the credentials to the URL: ws://username:password@localhost:8546)
+//	        
+        var options = 
+        {
+            timeout: 30000, 
+//            headers: {authorization: 'Basic username:password'} 
+        }; 
+
+        var ws = new Web3WsProvider('ws://localhost:8555', options);
+        const provider = ws;
+
+//        const provider =
+//            new Web3.providers.WebsocketProvider(
+//                    "http://127.0.0.1:8555");
+
+
+//            new Web3.providers.HttpProvider(
+//                    "http://127.0.0.1:8545");
 
 
         web3 = new Web3(provider);

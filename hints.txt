@@ -14,3 +14,15 @@ personal.unlockAccount(eth.accounts[0], "<your password>", 15000)
 ```
 
 https://ethereum.stackexchange.com/questions/11908/account-is-locked-after-running-truffle-migrate-command
+
+
+
+
+4. Events do not work via RPC. Only web socket provider is required for that.
+
+I subscribed to the event but it was not working. The callback was never called. Then I found out that I needed to activate the WebSockets server (--ws and similar in geth).
+Found it in this Ethereum Stack Exchange Post
+
+
+https://github.com/ethereum/web3.js/issues/989
+

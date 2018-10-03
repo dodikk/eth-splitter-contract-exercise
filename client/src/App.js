@@ -64,6 +64,7 @@ class App extends Component
       console.log("[END] subscribed event");
 
 
+
       console.log("[BEGIN] subscribing txpool...");
       this._pendingTransactionSubscription =         
           web3.eth.subscribe('pendingTransactions'); 
@@ -72,7 +73,12 @@ class App extends Component
                                           .on("data" , this.onTransactionMined) 
                                           .on("error", console.log);            
 
-      console.log("[BEGIN] subscribing txpool...");
+      console.log("[END] subscribing txpool...");
+
+
+
+
+
 
 // https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethfilter
 //      console.log("[BEGIN] subscribing filter...");
@@ -174,14 +180,13 @@ https://github.com/ethereum/web3.js/issues/989
   onBlockMined = async (maybeError, maybeBlockData) =>
   {
       console.log("=== onBlockMined");
-      this.onContactStateChangedImpl();
+      await this.onContractStateChangedImpl();
   }
 
   onTransactionMined = async (txHash) =>
   {
       console.log("=== onTransaction");
-
-      this.onContactStateChangedImpl();
+      await this.onContractStateChangedImpl();
   }
 
 
@@ -198,7 +203,7 @@ https://github.com/ethereum/web3.js/issues/989
       }
       else
       {
-          this.onContactStateChangedImpl();
+          await this.onContractStateChangedImpl();
       }
   }
 
@@ -207,7 +212,7 @@ https://github.com/ethereum/web3.js/issues/989
       console.log("===onContractStateChanged");
       console.log(logRecord);
 
-      this.onContactStateChangedImpl();
+      await this.onContractStateChangedImpl();
   }
 
   onContractStateChangedImpl = async () =>
