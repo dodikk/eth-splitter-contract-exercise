@@ -90,8 +90,12 @@ class App extends Component
 //
 //============================
 
+
 /*
       console.log("[BEGIN] subscribing event...");
+      //
+      // this does not work. no callbacks for some reason
+      //
       instance.LogEndSplit(                                
                     {fromBlock: 'latest'}               ,  
                     this.onContractStateChangedWatch    ); 
@@ -143,6 +147,7 @@ https://github.com/ethereum/web3.js/issues/989
 */
 
 
+
       console.log("[BEGIN] subscribing logs...");
       this._blockchainLogsSubscription =
           web3.eth.subscribe(
@@ -150,6 +155,7 @@ https://github.com/ethereum/web3.js/issues/989
                { address: instanceAddress }          ,
                this.onContractStateChangeSubscribed  );
       console.log("[END] subscribed logs.");
+
 
     }
     catch (error)
@@ -170,7 +176,7 @@ https://github.com/ethereum/web3.js/issues/989
      console.log("=== [begin] perform split");
     // TODO: fix hard code
 
-     var submittedTransaction = 
+     var submittedTransaction = // fired events can be observed in this object
      await this.state.contract.Split(
          this.state.firstReceiverAccountAddress,
          this.state.secondReceiverAccountAddress,
@@ -180,6 +186,7 @@ https://github.com/ethereum/web3.js/issues/989
              gasPrice: 10000 
          });
 
+     console.log("Split transaction : ");
      console.log(submittedTransaction);
 
 
@@ -188,7 +195,7 @@ https://github.com/ethereum/web3.js/issues/989
 // 
 //
 //
-//     await this.onContractStateChangedImpl();
+     await this.onContractStateChangedImpl();
 
      console.log("=== [end] perform split"); 
 

@@ -33,3 +33,16 @@ https://github.com/ethereum/web3.js/issues/989
 ** P.S. should have guessed before.
 
 [?] why is HttpProvider a default option in the react truffle box ?
+
+
+
+
+6. Contract method callback is the place where all fired events are available.
+Site GUI can be updated here.
+Other types of event listening are worse for this kind of task (given the current contract logic)
+
+
+```
+await contract.DoWork(args, {from: '0xdeadbeaf', gas: 20000})
+```
+
