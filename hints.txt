@@ -70,3 +70,11 @@ But it is not accurate enough, so I had to change some configs.
 http://www.pro-react.com/materials/appendixA/
 https://www.valentinog.com/blog/react-webpack-babel/#How_to_set_up_React_webpack_and_Babel_setting_up_webpack
 https://www.robinwieruch.de/minimal-react-webpack-babel-setup/
+
+
+10. When homepage is omitted in package.json, ipfs deployment does not work well since links get broken.
+
+When you’re happy with your super simple react app and think it’s time to deploy 
+you first have to go to the package.json 
+and add following line “homepage”: “./”, 
+to tell the build process that your base directory is in the same folder. 
