@@ -78,3 +78,8 @@ When you’re happy with your super simple react app and think it’s time to de
 you first have to go to the package.json 
 and add following line “homepage”: “./”, 
 to tell the build process that your base directory is in the same folder. 
+
+https://medium.com/elbstack/decentralized-hosting-of-a-static-react-app-with-ipfs-aae11b860f5e
+
+
+11. 
