@@ -65,4 +65,6 @@ serve -s /home/adk/projects/ethereum_learn/my_small_projects/splitter-react/clie
 
 
 
-9. 
+9. The webpack tutorial gives a good idea. 
+But it is not accurate enough, so I had to change some configs.
+http://www.pro-react.com/materials/appendixA/
