@@ -46,3 +46,23 @@ Other types of event listening are worse for this kind of task (given the curren
 await contract.DoWork(args, {from: '0xdeadbeaf', gas: 20000})
 ```
 
+
+
+7. truffle box react scripts must be upgraded
+
+```
+npm install react-scripts@>=2.0.0 --save
+```
+
+
+8. Ipfs fails to render the site properly while "serve" mini web server does.
+Just like ```npm run start```
+
+
+```
+serve -s /home/adk/projects/ethereum_learn/my_small_projects/splitter-react/client/build
+```
+
+
+
+9. 
