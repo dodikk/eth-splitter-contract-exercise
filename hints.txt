@@ -68,3 +68,5 @@ serve -s /home/adk/projects/ethereum_learn/my_small_projects/splitter-react/clie
 9. The webpack tutorial gives a good idea. 
 But it is not accurate enough, so I had to change some configs.
 http://www.pro-react.com/materials/appendixA/
+https://www.valentinog.com/blog/react-webpack-babel/#How_to_set_up_React_webpack_and_Babel_setting_up_webpack
+https://www.robinwieruch.de/minimal-react-webpack-babel-setup/
