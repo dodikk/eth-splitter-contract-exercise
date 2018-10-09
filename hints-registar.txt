@@ -1,0 +1,4 @@
+https://ethereum.gitbooks.io/frontier-guide/content/registrar_services.html
+https://github.com/ethereum/wiki/wiki/Registrar-ABI
+https://github.com/ethereum/dapp-bin.git
+

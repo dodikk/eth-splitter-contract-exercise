@@ -1,0 +1,13 @@
+https://swarm-guide.readthedocs.io/en/latest/up-and-download.html
+https://www.youtube.com/watch?v=1hLOEBjwBkY
+https://medium.com/@codeAMT/how-to-launch-swarm-for-dapp-testing-8003e55380e2
+https://medium.com/coinmonks/setting-up-a-multi-node-private-ethereum-swarm-network-without-a-blockchain-e3fd55873887
+https://dickolsson.com/building-dapps-on-ethereum-part-4-decentralised-hosting-swarm/
+
+
+
+
+> swarm --bzzapi "http://localhost:5000" up cat.jpeg 
+fdf8b5a9ece5fa66e2180759b4d3a29208e076381cf4fde6e749c9105270c2ca
+
+> wget http://localhost:5000/bzz:/fdf8b5a9ece5fa66e2180759b4d3a29208e076381cf4fde6e749c9105270c2ca > cat2.jpeg

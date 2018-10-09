@@ -83,4 +83,15 @@ https://medium.com/elbstack/decentralized-hosting-of-a-static-react-app-with-ipf
 https://hackernoon.com/ten-terrible-attempts-to-make-the-inter-planetary-file-system-human-friendly-e4e95df0c6fa
 
 
-11. 
+11. an interesting tool to explore. 
+https://developer.lamarkaz.com/parasol/usage
+
+Looks like "Truffle" replacement but a less mature one (imho).
+It seems to have less integration with web UI frameworks such as React/Vue/etc.
+
+
+
+12.
+
+
+
