@@ -1,0 +1,17 @@
+
+
+
+> swarm --bzzapi "http://localhost:5000" up cat.jpeg
+fdf8b5a9ece5fa66e2180759b4d3a29208e076381cf4fde6e749c9105270c2ca
+
+wget http://localhost:5000/bzz:/fdf8b5a9ece5fa66e2180759b4d3a29208e076381cf4fde6e749c9105270c2ca
+
+
+
+## =====
+cd ../client/build
+swarm --bzzapi "http://localhost:5000" --recursive --defaultpath index.html up .
+
+##
+# Open the URL below in the browser
+# http://localhost:5000/bzz:/1185cebc0c0f22541286ef39a9b98ae398d2288e0aae5ce4974fd2e6040ac6c7/
