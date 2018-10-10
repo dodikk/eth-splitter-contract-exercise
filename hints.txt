@@ -94,4 +94,7 @@ It seems to have less integration with web UI frameworks such as React/Vue/etc.
 12.
 
 
+https://ethereum.stackexchange.com/questions/2531/common-useful-javascript-snippets-for-geth
+https://blog.bigchaindb.com/the-dcs-triangle-5ce0e9e0f1dc
+http://swende.se/blog/EVM-Assembly-trick.html
 
