@@ -14,3 +14,10 @@ https://medium.com/coinmonks/setting-up-a-multi-node-private-ethereum-swarm-netw
 fdf8b5a9ece5fa66e2180759b4d3a29208e076381cf4fde6e749c9105270c2ca
 
 > wget http://localhost:5000/bzz:/fdf8b5a9ece5fa66e2180759b4d3a29208e076381cf4fde6e749c9105270c2ca > cat2.jpeg
+
+
+
+
+
+This one is helpful for publishing the react app on swarm.
+https://dickolsson.com/building-dapps-on-ethereum-part-4-decentralised-hosting-swarm/
