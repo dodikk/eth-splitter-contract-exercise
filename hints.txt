@@ -98,3 +98,8 @@ https://ethereum.stackexchange.com/questions/2531/common-useful-javascript-snipp
 https://blog.bigchaindb.com/the-dcs-triangle-5ce0e9e0f1dc
 http://swende.se/blog/EVM-Assembly-trick.html
 
+
+
+13. 
+https://dappsforbeginners.wordpress.com/tutorials/javascript-api-1/
+https://github.com/troyth/embark-dappsforbeginners-demo
