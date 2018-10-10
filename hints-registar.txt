@@ -2,3 +2,7 @@ https://ethereum.gitbooks.io/frontier-guide/content/registrar_services.html
 https://github.com/ethereum/wiki/wiki/Registrar-ABI
 https://github.com/ethereum/dapp-bin.git
 
+
+
+Deploying registar on private chain
+https://ens.readthedocs.io/en/latest/deploying.html
